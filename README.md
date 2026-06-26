@@ -96,10 +96,6 @@ This project follows the standard **simulation-based evaluation methodology** wi
 | Total Requests         | 900,000 per topology × α configuration |
 | Network Topologies     | GARR, GEANT, RocketFuel                |
 
-Since there are **3 network topologies** and **3 Zipf parameters**, the complete dataset contains:
-
-**9 configurations × 900,000 requests = 8,100,000 total requests.**
-
 ### Dataset Files
 
 | File                      |      Rows | Description                                                                                                                                                                                             |
@@ -126,7 +122,6 @@ path_length, cache_size_pct, inter_arrival_ms
 The synthetic request traces and benchmark topologies are generated to ensure controlled, reproducible, and fair comparisons between the original LARC scheme and the proposed LARC-QL approach. The use of Zipf-generated traces follows the same methodology adopted by prior ICN caching studies, enabling systematic evaluation under varying popularity skewness and cache-size conditions.
 
 All datasets used to reproduce the experimental results reported in the paper are included in this repository.
-
 
 ---
 ### Dataset Download
