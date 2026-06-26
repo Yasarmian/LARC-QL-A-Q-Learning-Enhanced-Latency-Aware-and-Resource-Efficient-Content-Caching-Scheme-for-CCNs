@@ -104,7 +104,7 @@ Since there are **3 network topologies** and **3 Zipf parameters**, the complete
 
 | File                      |      Rows | Description                                                                                                                                                                                             |
 | ------------------------- | --------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `requests_900k.csv`       | 8,100,000 | Complete request trace containing `request_id`, `phase`, `timestamp_ms`, `topology`, `alpha`, `content_id`, `content_rank`, `requester_node`, `path_length`, and `inter_arrival_ms`.                    |
+| `requests_900k.csv`       | 900,000 | Complete request trace containing `request_id`, `phase`, `timestamp_ms`, `topology`, `alpha`, `content_id`, `content_rank`, `requester_node`, `path_length`, and `inter_arrival_ms`.                    |
 | `raw_requests.csv`        |    18,000 | Sample per-request log containing topology, α, content rank, requester node, path length, inter-arrival time, and simulation phase (warm-up/measurement).                                               |
 | `content_popularity.csv`  |    10,000 | Zipf probabilities, expected request counts, and normalized popularity values for all three α values.                                                                                                   |
 | `simulation_trace.csv`    |     4,500 | Detailed simulation trace including EWMA fast/slow values, trend ratio (τ), CAS scores, adjusted CAS values, Q-table states, actions, rewards, cache hits/misses, latency, path stretch, and link load. |
@@ -129,6 +129,24 @@ All datasets used to reproduce the experimental results reported in the paper ar
 
 
 ---
+### Dataset Download
+
+The complete dataset used in this study is available for download from Google Drive:
+
+🔗 **Google Drive:** https://drive.google.com/file/d/11wua0ZQ37lHORHFuBLsGoTBNL4krskQ7/view?usp=sharing
+
+The download package contains:
+
+* `requests_900k.csv` (8,100,000 requests)
+* `raw_requests.csv`
+* `content_popularity.csv`
+* `simulation_trace.csv`
+* `performance_summary.csv`
+* `qtable_states.csv`
+* `ablation_results.csv`
+* `ewma_trace.csv`
+
+The dataset archive reproduces all experiments reported in the paper, including request traces, content popularity distributions, Q-learning state information, performance summaries, and EWMA traces. The dataset is provided to facilitate transparency, reproducibility, and future comparative studies in ICN/CCN caching research.
 
 ## Why Q-Learning? (Design Notes)
 
