@@ -137,7 +137,7 @@ The complete dataset used in this study is available for download from Google Dr
 
 The download package contains:
 
-* `requests_900k.csv` (8,100,000 requests)
+* `requests_900k.csv` (900,000 requests)
 * `raw_requests.csv`
 * `content_popularity.csv`
 * `simulation_trace.csv`
