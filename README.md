@@ -79,6 +79,54 @@ All parameters are in `config/settings.py`.  Key settings:
 | `GAMMA_Q` | 0.95 | Q-learning discount factor |
 | `EPSILON` | 0.10 | ε-greedy exploration probability |
 | `EWMA_FAST / SLOW` | 0.15 / 0.02 | Trend detection windows |
+---
+
+## Dataset
+
+This project follows the standard **simulation-based evaluation methodology** widely adopted in Information-Centric Networking (ICN) and Content-Centric Networking (CCN) caching research. No external traffic trace dataset is used. Instead, request traces are synthetically generated using a **Zipf distribution**, which has been extensively validated for modeling real-world content popularity.
+
+### Dataset Generation Parameters
+
+| Parameter              | Value                                  |
+| ---------------------- | -------------------------------------- |
+| Content Catalogue Size | 500,000 content objects                |
+| Zipf Parameters (α)    | {0.6, 0.8, 1.0}                        |
+| Warm-up Requests       | 300,000 per configuration              |
+| Measured Requests      | 600,000 per configuration              |
+| Total Requests         | 900,000 per topology × α configuration |
+| Network Topologies     | GARR, GEANT, RocketFuel                |
+
+Since there are **3 network topologies** and **3 Zipf parameters**, the complete dataset contains:
+
+**9 configurations × 900,000 requests = 8,100,000 total requests.**
+
+### Dataset Files
+
+| File                      |      Rows | Description                                                                                                                                                                                             |
+| ------------------------- | --------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `requests_900k.csv`       | 8,100,000 | Complete request trace containing `request_id`, `phase`, `timestamp_ms`, `topology`, `alpha`, `content_id`, `content_rank`, `requester_node`, `path_length`, and `inter_arrival_ms`.                    |
+| `raw_requests.csv`        |    18,000 | Sample per-request log containing topology, α, content rank, requester node, path length, inter-arrival time, and simulation phase (warm-up/measurement).                                               |
+| `content_popularity.csv`  |    10,000 | Zipf probabilities, expected request counts, and normalized popularity values for all three α values.                                                                                                   |
+| `simulation_trace.csv`    |     4,500 | Detailed simulation trace including EWMA fast/slow values, trend ratio (τ), CAS scores, adjusted CAS values, Q-table states, actions, rewards, cache hits/misses, latency, path stretch, and link load. |
+| `performance_summary.csv` |       180 | Aggregated performance metrics including Cache Hit Ratio (CHR), latency, path stretch, and internal/external link loads for LARC and LARC-QL across all topology, α, and cache-size combinations.       |
+| `qtable_states.csv`       |     2,520 | All Q1 and Q2 states with approximate converged Q-values for both actions and the preferred action label.                                                                                               |
+| `ablation_results.csv`    |         7 | Results of the ablation study presented in the paper.                                                                                                                                                   |
+| `ewma_trace.csv`          |     2,500 | EWMA fast and slow traces over 500 requests for content ranks 1, 2, 3, 10, and 100, corresponding to Figure 3 of the paper.                                                                             |
+
+### Request Record Format
+
+```text
+request_id, phase, timestamp_ms, topology, alpha,
+content_id, content_rank, requester_node,
+path_length, cache_size_pct, inter_arrival_ms
+```
+
+### Reproducibility Statement
+
+The synthetic request traces and benchmark topologies are generated to ensure controlled, reproducible, and fair comparisons between the original LARC scheme and the proposed LARC-QL approach. The use of Zipf-generated traces follows the same methodology adopted by prior ICN caching studies, enabling systematic evaluation under varying popularity skewness and cache-size conditions.
+
+All datasets used to reproduce the experimental results reported in the paper are included in this repository.
+
 
 ---
 
@@ -105,3 +153,6 @@ parameters and cannot adapt to:
 
 The **trend bin** (EWMA_fast / EWMA_slow ratio) is runtime information
 that LARC's static formula cannot access, making the ML layer genuinely adaptive.
+
+
+
